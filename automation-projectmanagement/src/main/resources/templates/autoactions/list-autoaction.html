@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: head"></head>
+<body>
+	<nav th:replace="layouts :: navbar"></nav>
+	<div>
+		<h3>Auto Action Directory</h3>
+
+		<a th:href="@{/autoactions/new}">New Auto Action</a>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Parameters</th>
+					<th>Operation</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="autoAction : ${autoActions}">
+					<td th:text="${autoAction.name}"></td>
+					<td th:text="${autoAction.description}"></td>
+					<td><div class="chip"
+							th:each="parameter : ${autoAction.parsedParameters}"
+							th:text="${parameter}"></div></td>
+					<td><a
+						th:href="@{/autoactions/edit/{id}(id=${autoAction.autoActionId})}"><i
+							class="material-icons">edit</i></a> <a
+						th:href="@{/autoactions/delete/{id}(id=${autoAction.autoActionId})}"><i
+							class="material-icons grey-text">delete</i></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

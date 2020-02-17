@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: head"></head>
+<body>
+	<nav th:replace="layouts :: navbar"></nav>
+	<div>
+		<form action="/autoprojects/save" method="POST"
+			th:object="${autoProject}">
+			<input type="text" placeholder="Auto Project Name" th:field="*{name}" />
+			<select th:field="${autoProject.stage}">
+				<option th:value="NOTSTARTED">Not Started</option>
+				<option th:value="INPROGRESS">In Progress</option>
+				<option th:value="COMPLETED">Completed</option>
+			</select>
+			<textarea placeholder="Auto Project Description"
+				th:field="${autoProject.description}"></textarea>
+			<select multiple="multiple" th:field="*{employees}">
+				<option th:each="employee : ${allEmployees}"
+					th:value="${employee.employeeId}" th:text="${employee.name}"></option>
+			</select>
+			<button type="submit">Create Auto Project</button>
+		</form>
+	</div>
+</body>
+</html>

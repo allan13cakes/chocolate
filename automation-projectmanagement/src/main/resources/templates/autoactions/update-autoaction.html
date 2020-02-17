@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: head"></head>
+<body>
+	<nav th:replace="layouts :: navbar"></nav>
+	<div>
+		<form
+			th:action="@{/autoactions/update/{id}(id=${autoAction.autoActionId})}"
+			method="POST" th:object="${autoAction}">
+			<div class="input-field">
+				<input type="text" id="name" th:field="*{name}" /> <label
+					for="name">Name</label>
+			</div>
+			<div class="input-field">
+				<textarea id="description" th:field="${autoAction.description}"
+					class="materialize-textarea"></textarea>
+				<label for="description">Description</label>
+			</div>
+			<div class="input-field">
+				<input type="hidden" id="parameters"
+					th:field="${autoAction.parameters}" />
+			</div>
+			<div id="parsedParameter" class="input-field"></div>
+			<div class="input-field inline">
+				<input type="text" id="newParameter" value="">
+			</div>
+			<button id="addParameter">Add Parameter</button>
+			<div>
+				<button type="submit">Update Auto Action</button>
+			</div>
+		</form>
+	</div>
+	<script th:inline="javascript">
+	
+		function renderParameterFromModel(){
+			var parameterArr=[];
+			parameterArr.push(...[[${autoAction.parsedParameters}]]);
+			var htmlStr ="";
+			for(var i=0;i<parameterArr.length;i++){
+				htmlStr+='<div class="chip">'+parameterArr[i] +'<i class="close material-icons">close</i></div>';
+			}
+			$('#parsedParameter').html(htmlStr);
+		}
+	
+		function renderParametersFromChip(val){
+			var parameterArr=[];
+			$('.chip').each(function(){
+				parameterArr.push($(this).text().replace("close",""));
+			});
+			parameterArr.push(val);
+			var htmlStr ="";
+			for(var i=0;i<parameterArr.length;i++){
+				htmlStr+='<div class="chip">'+parameterArr[i] +'<i class="close material-icons">close</i></div>';
+			}
+			$('#parsedParameter').html(htmlStr);
+			
+			$('#parameters').val(JSON.stringify(parameterArr));
+		}
+		
+		
+		$(document).ready(()=>{
+			renderParameterFromModel();
+			
+			$('#addParameter').click((event)=>{
+				event.preventDefault();
+				const newParameter = $('#newParameter').val();
+				renderParametersFromChip(newParameter);
+				$('#newParameter').val('');
+			});
+		});
+	</script>
+</body>
+</html>

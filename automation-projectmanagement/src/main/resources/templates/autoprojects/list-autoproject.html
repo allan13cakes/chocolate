@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: head"></head>
+<body>
+	<nav th:replace="layouts :: navbar"></nav>
+	<div>
+		<h3>Auto Project Directory</h3>
+
+		<a th:href="@{/autoprojects/new}">New Auto Project</a>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Stage</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="autoProject : ${autoProjects}">
+					<td th:text="${autoProject.name}"></td>
+					<td th:text="${autoProject.stage}"></td>
+					<td th:text="${autoProject.description}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

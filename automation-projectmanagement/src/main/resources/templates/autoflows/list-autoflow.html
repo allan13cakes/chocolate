@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: head"></head>
+<body>
+	<nav th:replace="layouts :: navbar"></nav>
+	<div>
+		<h3>Auto Flow Directory</h3>
+
+		<a th:href="@{/autoflows/new}">New Auto Flows</a>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Operation</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="autoFlow : ${autoFlows}">
+					<td th:text="${autoFlow.name}"></td>
+					<td><a
+						th:href="@{/autoflows/edit/{id}(id=${autoFlow.autoFlowId})}"><i
+							class="material-icons">edit</i></a> <a
+						th:href="@{/autoflows/delete/{id}(id=${autoFlow.autoFlowId})}"><i
+							class="material-icons grey-text">delete</i></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

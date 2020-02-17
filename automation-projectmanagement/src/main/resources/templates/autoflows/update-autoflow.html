@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: head"></head>
+<body>
+	<nav th:replace="layouts :: navbar"></nav>
+	<div>
+		<form th:action="@{/autoflows/update/{id}(id=${autoFlow.autoFlowId})}" method="POST" th:object="${autoFlow}">
+			<div class="input-field">
+				<input type="text" id="name" th:field="*{name}" /> <label
+					for="name">Name</label>
+			</div>
+			<div>
+				<button type="submit">Update Auto Flow</button>
+			</div>
+		</form>
+	</div>
+
+</body>
+</html>

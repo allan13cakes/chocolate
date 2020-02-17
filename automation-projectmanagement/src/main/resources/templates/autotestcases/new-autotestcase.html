@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: head"></head>
+<body>
+	<nav th:replace="layouts :: navbar"></nav>
+	<div>
+		<form action="/autotestcases/save" method="POST"
+			th:object="${autoTestCase}">
+			<div class="input-field">
+				<input type="text" th:field="*{jiraKey}" id="jiraKey" /> <label
+					for="jiraKey">JiraKey</label>
+			</div>
+
+			<div class="input-field">
+				<select th:field="${autoTestCase.stage}" id="stage">
+					<option value="" disabled selected>Select Option</option>
+					<option th:value="NOTSTARTED">Not Started</option>
+					<option th:value="INPROGRESS">In Progress</option>
+					<option th:value="COMPLETED">Completed</option>
+				</select> <label for="stage">Progress</label>
+			</div>
+			<div class="input-field">
+				<textarea th:field="${autoTestCase.summary}" id="summary"
+					class="materialize-textarea"></textarea>
+				<label for="summary">Summary</label>
+			</div>
+
+			<button type="submit">Create Auto TestCase</button>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: head"></head>
+<body>
+	<nav th:replace="layouts :: navbar"></nav>
+	<div>
+		<form action="/autoflows/save" method="POST"
+			th:object="${autoFlowForm}">
+			<div class="input-field">
+				<input type="text" id="name" th:field="*{autoFlow.name}" /> <label
+					for="name">Name</label>
+			</div>
+			<div class="input-field">
+				<select multiple="multiple"
+					th:field="${autoFlowForm.selectedAutoActionId}">
+					<option th:each="autoAction : ${autoActions}"
+						th:value="${autoAction.autoActionId}" th:text="${autoAction.name}"></option>
+				</select>
+			</div>
+
+			<!-- <div class="row">
+				<div class="col m6 s12">
+					<ul class="collection with-header">
+						<li class="collection-header">
+							<h5>Actions</h5>
+						</li>
+						<li class="collection-item avatar"
+							th:each="autoAction : ${autoActions}"><i
+							class="material-icons blue circle">contacts</i> <span
+							class="title" th:text="${autoAction.name}"></span>
+							<div>
+								<div class="chip"
+									th:each="parameter : ${autoAction.parsedParameters}"
+									th:text="${parameter}"></div>
+							</div>
+							<a th:href="" class="secondary-content"><i class="material-icons">add</i></a>	
+						</li>
+					</ul>
+				</div>
+				<div class="col m6 s12">
+					<ul class="collection with-header">
+						<li class="collection-header">
+							<h5>Flows</h5>
+						</li>
+						<li class="collection-item" th:each="autoActionFlow : ${autoFlow.autoActionFlows}" th:text="${autoActionFlow.actionOrder}">
+							
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div> -->
+
+
+			<button type="submit">Create Auto Flow</button>
+
+		</form>
+	</div>
+
+</body>
+</html>

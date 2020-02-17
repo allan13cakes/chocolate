@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: head"></head>
+<body>
+	<nav th:replace="layouts :: navbar"></nav>
+	<div>
+		<h3>Auto TestCase Directory</h3>
+
+		<a th:href="@{/autotestcases/new}">New Auto TestCase</a>
+
+		<table>
+			<thead>
+				<tr>
+					<th>JiraKey</th>
+					<th>Summary</th>
+					<th>Progress</th>
+					<th>Operation</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="autoTestCase : ${autoTestCases}">
+					<td th:text="${autoTestCase.jiraKey}"></td>
+					<td th:text="${autoTestCase.summary}"></td>
+					<td th:text="${autoTestCase.stage}"></td>
+					<td><a
+						th:href="@{/autotestcases/edit/{id}(id=${autoTestCase.autoTestCaseId})}"><i
+							class="material-icons">edit</i></a> <a
+						th:href="@{/autotestcases/delete/{id}(id=${autoTestCase.autoTestCaseId})}"><i
+							class="material-icons grey-text">delete</i></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
