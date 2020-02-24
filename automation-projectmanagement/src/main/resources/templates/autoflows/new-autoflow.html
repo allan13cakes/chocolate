@@ -3,58 +3,74 @@
 <head th:replace="layouts :: head"></head>
 <body>
 	<nav th:replace="layouts :: navbar"></nav>
-	<div>
-		<form action="/autoflows/save" method="POST"
-			th:object="${autoFlowForm}">
+	<div class="container">
+		<form action="/autoflows/save" method="POST" th:object="${autoFlowForm}">
 			<div class="input-field">
-				<input type="text" id="name" th:field="*{autoFlow.name}" /> <label
-					for="name">Name</label>
+				<input type="text" id="name" th:field="*{autoFlow.name}" />
+				<label for="name">Name</label>
 			</div>
-			<div class="input-field">
-				<select multiple="multiple"
-					th:field="${autoFlowForm.selectedAutoActionId}">
-					<option th:each="autoAction : ${autoActions}"
-						th:value="${autoAction.autoActionId}" th:text="${autoAction.name}"></option>
+			<div class="input-field" style="display: none">
+				<select multiple="multiple" th:field="${autoFlowForm.selectedAutoActionId}" id="selectedAutoActionIds">
 				</select>
 			</div>
-
-			<!-- <div class="row">
+			<div class="row">
 				<div class="col m6 s12">
-					<ul class="collection with-header">
-						<li class="collection-header">
-							<h5>Actions</h5>
-						</li>
-						<li class="collection-item avatar"
-							th:each="autoAction : ${autoActions}"><i
-							class="material-icons blue circle">contacts</i> <span
-							class="title" th:text="${autoAction.name}"></span>
+					<ul class="collection" id="actionList">
+						<li class="collection-item avatar" th:each="autoAction : ${autoActions}">
+							<i class="material-icons blue circle">contacts</i>
+							<span class="title" th:text="${autoAction.name}"></span>
 							<div>
-								<div class="chip"
-									th:each="parameter : ${autoAction.parsedParameters}"
-									th:text="${parameter}"></div>
+								<span class="chip" th:each="parameter : ${autoAction.parsedParameters}" th:text="${parameter}"></span>
 							</div>
-							<a th:href="" class="secondary-content"><i class="material-icons">add</i></a>	
+							<a href="#" class="secondary-content">
+								<i class="material-icons">add</i>
+								<input type="hidden" th:value="${autoAction.autoActionId}" />
+							</a>
 						</li>
 					</ul>
 				</div>
 				<div class="col m6 s12">
-					<ul class="collection with-header">
-						<li class="collection-header">
-							<h5>Flows</h5>
-						</li>
-						<li class="collection-item" th:each="autoActionFlow : ${autoFlow.autoActionFlows}" th:text="${autoActionFlow.actionOrder}">
-							
-						</li>
+					<ul class="collection" id="flowList">
 					</ul>
 				</div>
 			</div>
-			<div> -->
-
-
 			<button type="submit">Create Auto Flow</button>
-
 		</form>
 	</div>
-
+	<script>
+		$(document).ready(()=>{
+			const selectActions = [];
+			$('#actionList>li>a').click((event)=>{
+				event.preventDefault();
+				const autoActionId = event.currentTarget.querySelector('input').value;
+				selectActions.push(autoActionId);
+				/*add new option to #selectedAutoActionIds*/
+				$('#selectedAutoActionIds').append('<option value="'+selectActions.length+'-'+autoActionId+'"></option>');
+				
+				$('#selectedAutoActionIds>option[value='+selectActions.length +'-'+autoActionId+']').attr('selected','selected');
+				
+				var actionItem = event.currentTarget.parentNode;
+				$(actionItem).clone().appendTo('#flowList');
+				//$('#flowList').append(event.currentTarget.parentNode);
+				
+				//change add icon to clear
+				console.log($('#flowList>li>a>i:last'));
+				$('#flowList>li>a>i:last').html('clear');
+				$('#flowList>li>a>input:last').attr('value', selectActions.length+'-'+autoActionId);
+			});
+			
+			
+			$("#flowList").on('click','li>a',(event)=>{
+				event.preventDefault();
+				const autoActionFlowId = event.currentTarget.querySelector('input').value;
+				console.log(autoActionFlowId);
+				//remove item from select
+				$('#selectedAutoActionIds>option[value='+autoActionFlowId+']').remove();
+				//remove item from dom
+				$(event.currentTarget.parentNode).remove();
+				
+			});
+		});
+	</script>
 </body>
 </html>

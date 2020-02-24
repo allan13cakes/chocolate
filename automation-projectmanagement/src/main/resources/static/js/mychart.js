@@ -1,12 +1,21 @@
+let labels = [];
+let pieDatas = [];
+
+for (i = 0; i < chartData.length; i++) {
+	console.log(chartData[i].label + "," + chartData[i].value);
+	labels.push(chartData[i].label);
+	pieDatas.push(chartData[i].value);
+}
+
 var config = {
 	type : 'pie',
 	data : {
 		datasets : [ {
-			data : [ 1, 2, 3 ],
+			data : pieDatas,
 			backgroundColor : [ "#3e95cd", "#8e5ea2", "#3cba9f" ],
 			label : 'Dataset 1'
 		} ],
-		labels : [ "#3e95cd", "#8e5ea2", "#3cba9f" ]
+		labels : labels
 
 	},
 	options : {

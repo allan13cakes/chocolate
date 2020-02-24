@@ -3,7 +3,7 @@
 <head th:replace="layouts :: head"></head>
 <body>
 	<nav th:replace="layouts :: navbar"></nav>
-	<div>
+	<div class="container">
 		<h3>Auto Flow Directory</h3>
 
 		<a th:href="@{/autoflows/new}">New Auto Flows</a>
@@ -12,12 +12,20 @@
 			<thead>
 				<tr>
 					<th>Name</th>
+					<th>Actions</th>
 					<th>Operation</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="autoFlow : ${autoFlows}">
 					<td th:text="${autoFlow.name}"></td>
+					<td>
+						<div th:each="autoActionFlow : ${autoFlow.autoActionFlows}">
+						<span th:text="${autoActionFlow.actionOrder}"></span>
+							<span th:text="${autoActionFlow.autoAction.name}"></span>
+							<span th:each="parameter : ${autoActionFlow.autoAction.parsedParameters}" th:text="${parameter}"></span>
+						</div>
+					</td>
 					<td><a
 						th:href="@{/autoflows/edit/{id}(id=${autoFlow.autoFlowId})}"><i
 							class="material-icons">edit</i></a> <a

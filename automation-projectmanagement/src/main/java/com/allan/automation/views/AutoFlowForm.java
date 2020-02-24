@@ -6,7 +6,7 @@ import com.allan.automation.entites.AutoFlow;
 
 public class AutoFlowForm {
 	private AutoFlow autoFlow;
-	private List<Long> selectedAutoActionId;
+	private List<String> selectedAutoActionId;
 
 	public AutoFlow getAutoFlow() {
 		return autoFlow;
@@ -16,11 +16,11 @@ public class AutoFlowForm {
 		this.autoFlow = autoFlow;
 	}
 
-	public List<Long> getSelectedAutoActionId() {
+	public List<String> getSelectedAutoActionId() {
 		return selectedAutoActionId;
 	}
 
-	public void setSelectedAutoActionId(List<Long> selectedAutoActionId) {
+	public void setSelectedAutoActionId(List<String> selectedAutoActionId) {
 		this.selectedAutoActionId = selectedAutoActionId;
 	}
 

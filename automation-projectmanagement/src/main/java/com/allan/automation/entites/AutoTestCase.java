@@ -1,9 +1,15 @@
 package com.allan.automation.entites;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class AutoTestCase {
@@ -13,6 +19,10 @@ public class AutoTestCase {
 	private String jiraKey;
 	private String summary;
 	private String stage;
+
+	@OneToMany(mappedBy = "autoTestCase", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH }, fetch = FetchType.LAZY)
+	private Set<AutoTestStep> autoTestSteps;
 
 	public long getAutoTestCaseId() {
 		return autoTestCaseId;
@@ -44,6 +54,17 @@ public class AutoTestCase {
 
 	public void setStage(String stage) {
 		this.stage = stage;
+	}
+
+	public Set<AutoTestStep> getAutoTestSteps() {
+		if (autoTestSteps == null) {
+			autoTestSteps = new HashSet<>();
+		}
+		return autoTestSteps;
+	}
+
+	public void setAutoTestSteps(Set<AutoTestStep> autoTestSteps) {
+		this.autoTestSteps = autoTestSteps;
 	}
 
 }

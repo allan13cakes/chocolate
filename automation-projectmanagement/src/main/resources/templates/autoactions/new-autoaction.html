@@ -3,7 +3,7 @@
 <head th:replace="layouts :: head"></head>
 <body>
 	<nav th:replace="layouts :: navbar"></nav>
-	<div>
+	<div class="container">
 		<form action="/autoactions/save" method="POST"
 			th:object="${autoAction}">
 			<div class="input-field">

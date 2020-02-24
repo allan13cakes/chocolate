@@ -3,30 +3,196 @@
 <head th:replace="layouts :: head"></head>
 <body>
 	<nav th:replace="layouts :: navbar"></nav>
-	<div>
-		<form action="/autotestcases/save" method="POST"
-			th:object="${autoTestCase}">
+	<div class="container">
+		<form action="/autotestcases/save" method="POST" th:object="${autoTestCaseForm}" id="myform">
 			<div class="input-field">
-				<input type="text" th:field="*{jiraKey}" id="jiraKey" /> <label
-					for="jiraKey">JiraKey</label>
+				<input type="text" th:field="*{autoTestCase.jiraKey}" id="jiraKey" />
+				<label for="jiraKey">JiraKey</label>
 			</div>
 
 			<div class="input-field">
-				<select th:field="${autoTestCase.stage}" id="stage">
+				<select th:field="${autoTestCaseForm.autoTestCase.stage}" id="stage">
 					<option value="" disabled selected>Select Option</option>
 					<option th:value="NOTSTARTED">Not Started</option>
 					<option th:value="INPROGRESS">In Progress</option>
 					<option th:value="COMPLETED">Completed</option>
-				</select> <label for="stage">Progress</label>
+				</select>
+				<label for="stage">Progress</label>
 			</div>
 			<div class="input-field">
-				<textarea th:field="${autoTestCase.summary}" id="summary"
-					class="materialize-textarea"></textarea>
+				<textarea th:field="${autoTestCaseForm.autoTestCase.summary}" id="summary" class="materialize-textarea"></textarea>
 				<label for="summary">Summary</label>
 			</div>
+			<div class="input-field" style="display: none">
+				<select multiple="multiple" th:field="${autoTestCaseForm.selectedActionIds}" id="selectedAutoActionIds">
+				</select>
+			</div>
+			<div class="row">
+				<div class="col m4 s12">
+					<div class="input-field">
+						<input type="search" id="search" onkeyup="search_action()" />
+						<label for="search" class="label-icon">
+							<i class="material-icons">search</i>
+						</label>
+						<i class="material-icons">close</i>
+					</div>
+					<ul class="collection" id="searchList">
+						<li th:each="autoAction :${autoActions}" class="collection-item avatar">
+							<i class="material-icons blue circle">contacts</i>
+							<span class="title" th:text="${autoAction.name}"></span>
+							<div>
+								<span class="chip" th:each="parameter : ${autoAction.parsedParameters}" th:text="${parameter}"></span>
+								<input type="hidden" value='' th:each="parameter : ${autoAction.parsedParameters}" th:placeholder="${parameter}" />
+							</div>
+							<a href="#" class="secondary-content">
+								<i class="material-icons">add</i>
+								<input type="hidden" th:value="${autoAction.autoActionId}" />
+							</a>
+						</li>
+					</ul>
 
-			<button type="submit">Create Auto TestCase</button>
+					<ul class="collapsible" id="searchFlowList" data-collapsibale="expandable">
+						<li th:each="autoFlow : ${autoFlows}">
+							<div class="collapsible-header active">
+								<i class="material-icons">group_work</i>
+								<span th:text="${autoFlow.name}"></span>
+								<a href="#" class="secondary-content right">
+									<i class="material-icons">add</i>
+									<input type="hidden" th:value="${autoFlow.autoFlowId}" />
+								</a>
+							</div>
+							<div class="collapsible-body">
+								<ul class="collection">
+									<li th:each="autoActionFlow :${autoFlow.autoActionFlows}" class="collection-item avatar">
+										<i class="material-icons blue circle">contacts</i>
+										<span class="title" th:text="${autoActionFlow.autoAction.name}"></span>
+										<div>
+											<span class="chip" th:each="parameter : ${autoActionFlow.autoAction.parsedParameters}" th:text="${parameter}"></span>
+											<input type="hidden" value='' th:each="parameter : ${autoActionFlow.autoAction.parsedParameters}"
+												th:placeholder="${parameter}" />
+										</div>
+									</li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="col m8 s12">
+					<ul class="collapsible collection" id="flowList">
+					</ul>
+				</div>
+			</div>
+			<button type="submit" id="createBtn">Create Auto TestCase</button>
 		</form>
 	</div>
+
+	<script type="text/javascript">
+		function search_action() {
+			let input = document.getElementById('search').value;
+			console.log(input);
+			input = input.toLowerCase();
+			let items = document.querySelectorAll('#searchList li');
+			for (i = 0; i < items.length; i++) {
+				if (!items[i].innerHTML.toLowerCase().includes(input)) {
+					items[i].style.display = 'none';
+				} else {
+					items[i].style.display = 'list-item';
+				}
+
+			}
+		}
+
+		$(document).ready(function() {
+			const selectActions = [];
+			$('#searchList>li>a').click((event)=>{
+				event.preventDefault();
+				
+				
+				const autoActionId = event.currentTarget.querySelector('input').value;
+				selectActions.push(autoActionId);
+				const value = selectActions.length+'-0-'+autoActionId;
+				
+				
+				var actionItem = event.currentTarget.parentNode;
+				$(actionItem).clone().appendTo('#flowList');
+			
+				
+				//change add icon to clear
+				console.log($('#flowList>li>a>i:last'));
+				$('#flowList>li>a>i:last').html('clear');
+				$('#flowList>li>a>input:last').attr('value', value);
+				
+				$('#flowList>li:last>div>span').attr('style','display:none');
+				$('#flowList>li:last>div>input').attr('type','text');
+			});
+			
+			$('#searchFlowList>li>div>a').click((event)=>{
+				event.stopPropagation();
+				
+				const autoFlowId = event.currentTarget.querySelector('input').value;
+				selectActions.push(autoFlowId);
+				const value = selectActions.length + '-1-'+autoFlowId;
+				
+				var flowItem = event.currentTarget.parentNode.parentNode;
+				$(flowItem).clone().appendTo('#flowList');
+				
+				//change add icon to clear
+				console.log($('#flowList>li>a>i:last'));
+				$('#flowList>li>div>a>i:last').html('clear');
+				$('#flowList>li>div>a>input:last').attr('value', value);
+				
+				
+				$('#flowList>li:last>div>ul>li>div>span').attr('style','display:none');
+				$('#flowList>li:last>div>ul>li>div>input').attr('type','text');
+				
+			});
+			
+			
+			$("#flowList").on('click','li>a',(event)=>{
+				event.preventDefault();
+				const autoActionFlowId = event.currentTarget.querySelector('input').value;
+				console.log(autoActionFlowId);
+				
+				//remove item from dom
+				$(event.currentTarget.parentNode).remove();
+				
+			});
+			
+			$("#flowList").on('click','li>div>a',(event)=>{
+				event.stopPropagation();
+				
+				const autoActionFlowId = event.currentTarget.querySelector('input').value;
+				console.log(autoActionFlowId);
+				
+				//remove item from dom
+				$(event.currentTarget.parentNode.parentNode).remove();
+			});
+			
+			$('#createBtn').click((event)=>{
+				event.preventDefault();
+				const flowList = $('#flowList>li');
+				
+				for(i=0;i<flowList.length;i++){
+					const flowItem = flowList[i];
+					//id
+					let value = flowItem.querySelector('a>input').value;
+					
+					//parameter
+					const parameterArry = [];
+					const parameters = flowItem.querySelectorAll('div>input');
+					for(j=0;j<parameters.length;j++){
+						parameterArry.push(parameters[j].value);
+					}
+					
+					value = encodeURIComponent(value +'-'+JSON.stringify(parameterArry))+'-description test';
+					$('#selectedAutoActionIds').append('<option selected=selected value="'+value+'"></option>');
+					console.log(value)
+				}
+				
+				$('#myform').submit();
+			})
+			
+		});
+	</script>
 </body>
 </html>

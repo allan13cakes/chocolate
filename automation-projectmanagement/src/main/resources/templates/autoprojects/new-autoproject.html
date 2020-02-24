@@ -3,7 +3,7 @@
 <head th:replace="layouts :: head"></head>
 <body>
 	<nav th:replace="layouts :: navbar"></nav>
-	<div>
+	<div class="container">
 		<form action="/autoprojects/save" method="POST"
 			th:object="${autoProject}">
 			<input type="text" placeholder="Auto Project Name" th:field="*{name}" />

@@ -3,7 +3,7 @@
 <head th:replace="layouts :: head"></head>
 <body>
 	<nav th:replace="layouts :: navbar"></nav>
-	<div>
+	<div class="container">
 		<h3>Auto TestCase Directory</h3>
 
 		<a th:href="@{/autotestcases/new}">New Auto TestCase</a>
@@ -14,6 +14,7 @@
 					<th>JiraKey</th>
 					<th>Summary</th>
 					<th>Progress</th>
+					<th>TestStep</th>
 					<th>Operation</th>
 				</tr>
 			</thead>
@@ -22,11 +23,42 @@
 					<td th:text="${autoTestCase.jiraKey}"></td>
 					<td th:text="${autoTestCase.summary}"></td>
 					<td th:text="${autoTestCase.stage}"></td>
-					<td><a
-						th:href="@{/autotestcases/edit/{id}(id=${autoTestCase.autoTestCaseId})}"><i
-							class="material-icons">edit</i></a> <a
-						th:href="@{/autotestcases/delete/{id}(id=${autoTestCase.autoTestCaseId})}"><i
-							class="material-icons grey-text">delete</i></a></td>
+					<td>
+						<div th:each="autoTestStep : ${autoTestCase.autoTestSteps}">
+							<div th:text="${autoTestStep.description}"></div>
+
+							<span th:if="${autoTestStep.autoAction}">
+								<span th:text="${autoTestStep.autoAction.name}"></span>
+								<span th:each="parameter,iterationStatus : ${autoTestStep.autoAction.parsedParameters}">
+									<span th:text="${parameter}"></span>
+									<span th:text="${autoTestStep.parsedTestDatas.get(iterationStatus.index)}"></span>
+								</span>
+							</span>
+							<span th:if="${autoTestStep.autoFlow}">
+								<span th:text="${autoTestStep.autoFlow.name}"></span>
+								<span th:each="autoActionFlow,flowIter : ${autoTestStep.autoFlow.autoActionFlows}">
+									<span th:text="${autoActionFlow.autoAction.name}"> </span>
+									<span th:each="parameter,iterationStatus : ${autoActionFlow.autoAction.parsedParameters}" >
+										<span th:text="${parameter}"></span>
+										<span th:text="${autoTestStep.parsedTestDatas.get(#ids.seq('')-1)}"></span>
+										<!-- <span th:text="${#ids.seq('')}"></span> -->
+									</span>
+								</span>
+							</span>
+							<!-- <span>
+								<span th:each="testData : ${autoTestStep.parsedTestDatas}" th:text="${testData}"></span>
+							</span> -->
+
+						</div>
+					</td>
+					<td>
+						<a th:href="@{/autotestcases/edit/{id}(id=${autoTestCase.autoTestCaseId})}">
+							<i class="material-icons">edit</i>
+						</a>
+						<a th:href="@{/autotestcases/delete/{id}(id=${autoTestCase.autoTestCaseId})}">
+							<i class="material-icons grey-text">delete</i>
+						</a>
+					</td>
 				</tr>
 			</tbody>
 		</table>

@@ -48,10 +48,13 @@ public class AutoFlowController {
 	public String save(AutoFlowForm autoFlowForm) {
 		AutoFlow autoFlow = autoFlowForm.getAutoFlow();
 
-		List<Long> selectedAutoActionId = autoFlowForm.getSelectedAutoActionId();
+		List<String> selectedAutoActionId = autoFlowForm.getSelectedAutoActionId();
 		int index = 1;
-		for (Long actionId : selectedAutoActionId) {
-			AutoAction autoAction = autoActionRepo.findById(actionId).get();
+		for (String id : selectedAutoActionId) {
+
+			String actionId = id.split("-")[1];
+			System.out.println(new Long(actionId));
+			AutoAction autoAction = autoActionRepo.findById(new Long(actionId)).get();
 			AutoActionFlow autoActionFlow = new AutoActionFlow();
 			autoActionFlow.setActionOrder(index++);
 			autoActionFlow.setAutoAction(autoAction);
