@@ -13,12 +13,21 @@
 				<tr>
 					<th>Name</th>
 					<th>Email</th>
+					<th>Operation</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="employee : ${employees}">
 					<td th:text="${employee.name}"></td>
 					<td th:text="${employee.email}"></td>
+					<td>
+						<a th:href="@{/employee/edit/{id}(id=${employee.employeeId})}">
+							<i class="material-icons">edit</i>
+						</a>
+						<a th:href="@{/employee/delete/{id}(id=${employee.employeeId})}">
+							<i class="material-icons grey-text">delete</i>
+						</a>
+					</td>
 				</tr>
 			</tbody>
 		</table>

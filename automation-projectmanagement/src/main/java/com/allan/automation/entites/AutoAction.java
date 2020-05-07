@@ -1,7 +1,6 @@
 package com.allan.automation.entites;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -10,8 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class AutoAction {
@@ -20,8 +18,9 @@ public class AutoAction {
 	private long autoActionId;
 	private String name;
 	private String description;
-	private String parameters;
-
+	@OneToMany(mappedBy = "autoAction")
+	private Set<AutoParameter> autoParameters;
+	@JsonIgnore
 	@OneToMany(mappedBy = "autoAction")
 	private Set<AutoActionFlow> autoActionFlows;
 
@@ -29,11 +28,10 @@ public class AutoAction {
 		super();
 	}
 
-	public AutoAction(String name, String description, String parameters) {
+	public AutoAction(String name, String description) {
 		super();
 		this.name = name;
 		this.description = description;
-		this.parameters = parameters;
 	}
 
 	public long getAutoActionId() {
@@ -60,14 +58,6 @@ public class AutoAction {
 		this.description = description;
 	}
 
-	public String getParameters() {
-		return parameters;
-	}
-
-	public void setParameters(String parameters) {
-		this.parameters = parameters;
-	}
-
 	public Set<AutoActionFlow> getAutoActionFlows() {
 		return autoActionFlows;
 	}
@@ -76,16 +66,15 @@ public class AutoAction {
 		this.autoActionFlows = autoActionFlows;
 	}
 
-	public List<String> getParsedParameters() {
-		ObjectMapper mapper = new ObjectMapper();
-		List<String> listParameter = new ArrayList<>();
-		try {
-			listParameter = mapper.readValue(this.parameters, new TypeReference<List<String>>() {
-			});
-		} catch (Exception e) {
-			listParameter.add(this.parameters);
+	public Set<AutoParameter> getAutoParameters() {
+		if (autoParameters == null) {
+			autoParameters = new HashSet<>();
 		}
-		return listParameter;
+		return autoParameters;
+	}
+
+	public void setAutoParameters(Set<AutoParameter> autoParameters) {
+		this.autoParameters = autoParameters;
 	}
 
 }

@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -24,19 +25,14 @@ public class AutoTestStep {
 	private String description;
 	private int stepOrder;
 
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "auto_test_case_id")
 	private AutoTestCase autoTestCase;
 
 	@ManyToOne
-	@JoinColumn(name = "auto_action_id")
-	private AutoAction autoAction;
-
-	@ManyToOne
 	@JoinColumn(name = "auto_flow_id")
 	private AutoFlow autoFlow;
-
-	private String testDatas;
 
 	public long getAutoTestStepId() {
 		return autoTestStepId;
@@ -70,43 +66,12 @@ public class AutoTestStep {
 		this.autoTestCase = autoTestCase;
 	}
 
-	public AutoAction getAutoAction() {
-		return autoAction;
-	}
-
-	public void setAutoAction(AutoAction autoAction) {
-		this.autoAction = autoAction;
-	}
-
 	public AutoFlow getAutoFlow() {
 		return autoFlow;
 	}
 
 	public void setAutoFlow(AutoFlow autoFlow) {
 		this.autoFlow = autoFlow;
-	}
-
-	public String getTestDatas() {
-		return testDatas;
-	}
-
-	public void setTestDatas(String testDatas) {
-		this.testDatas = testDatas;
-	}
-
-	public List<String> getParsedTestDatas() {
-		ObjectMapper mapper = new ObjectMapper();
-		List<String> parsedTestDatas = new ArrayList<>();
-		try {
-			parsedTestDatas = mapper.readValue(testDatas, new TypeReference<List<String>>() {
-			});
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return parsedTestDatas;
-
 	}
 
 }

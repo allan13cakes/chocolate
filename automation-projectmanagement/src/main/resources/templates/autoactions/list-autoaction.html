@@ -24,11 +24,14 @@
 					<td><div class="chip"
 							th:each="parameter : ${autoAction.parsedParameters}"
 							th:text="${parameter}"></div></td>
-					<td><a
-						th:href="@{/autoactions/edit/{id}(id=${autoAction.autoActionId})}"><i
-							class="material-icons">edit</i></a> <a
-						th:href="@{/autoactions/delete/{id}(id=${autoAction.autoActionId})}"><i
-							class="material-icons grey-text">delete</i></a></td>
+					<td>
+						<a th:href="@{/autoactions/edit/{id}(id=${autoAction.autoActionId})}">
+							<i class="material-icons">edit</i>
+						</a>
+						<a th:href="@{/autoactions/delete/{id}(id=${autoAction.autoActionId})}">
+							<i class="material-icons grey-text">delete</i>
+						</a>
+					</td>
 				</tr>
 			</tbody>
 		</table>

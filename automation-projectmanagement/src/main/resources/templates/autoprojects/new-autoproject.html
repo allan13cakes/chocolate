@@ -13,7 +13,7 @@
 				<option th:value="COMPLETED">Completed</option>
 			</select>
 			<textarea placeholder="Auto Project Description"
-				th:field="${autoProject.description}"></textarea>
+				th:field="${autoProject.description}" class="materialize-textarea"></textarea>
 			<select multiple="multiple" th:field="*{employees}">
 				<option th:each="employee : ${allEmployees}"
 					th:value="${employee.employeeId}" th:text="${employee.name}"></option>

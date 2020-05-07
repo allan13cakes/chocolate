@@ -8,11 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class AutoActionFlow {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "auto_action_flow_seq")
 	private Long id;
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "auto_flow_id")
 	private AutoFlow autoFlow;

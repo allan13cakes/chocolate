@@ -3,36 +3,59 @@
 
 <head th:fragment="head">
 <meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" th:href="@{/fonts/icon.css}">
-<link type="text/css" rel="stylesheet"
-	th:href="@{/css/materialize.min.css}" media="screen,projection" />
+<link type="text/css" rel="stylesheet" th:href="@{/css/materialize.min.css}" media="screen,projection" />
+<link rel="stylesheet" th:href="@{/css/style.css}" />
 <script type="text/javascript" th:src="@{/vendors/chartjs/Chart.js}"></script>
 <script type="text/javascript" th:src="@{/js/jquery-3.2.1.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/materialize.min.js}"></script>
 </head>
 
 <nav th:fragment="navbar" class="blue darken-4">
-	<a href="#" class="brand-logo">Automation</a> <a href="#!"
-		data-activates="sideNav" class="button-collapse"> <i
-		class="material-icons">menu</i>
+	<a href="#" class="brand-logo">Automation</a>
+	<a href="#!" data-activates="sideNav" class="button-collapse">
+		<i class="material-icons">menu</i>
 	</a>
 	<ul class="right hide-on-med-and-down">
-		<li><a th:href="@{/}">Home</a></li>
-		<li><a th:href="@{/employee}">Employee</a></li>
-		<li><a th:href="@{/autoprojects}">AutoProjects</a></li>
-		<li><a th:href="@{/autoflows}">AutoFlows</a></li>
-		<li><a th:href="@{/autoactions}">AutoActions</a></li>
-		<li><a th:href="@{/autotestcases}">AutoTestCases</a></li>
+		<li>
+			<a th:href="@{/}">Home</a>
+		</li>
+		<li>
+			<a th:href="@{/employee}">Employee</a>
+		</li>
+		<li>
+			<a th:href="@{/autoprojects}">AutoProjects</a>
+		</li>
+		<li>
+			<a th:href="@{/autoflows}">AutoFlows</a>
+		</li>
+		<li>
+			<a th:href="@{/autoactions}">AutoActions</a>
+		</li>
+		<li>
+			<a th:href="@{/autotestcases}">AutoTestCases</a>
+		</li>
 	</ul>
 	<ul id="sideNav" class="side-nav">
-		<li><a th:href="@{/}">Home</a></li>
-		<li><a th:href="@{/employee}">Employee</a></li>
-		<li><a th:href="@{/autoprojects}">AutoProjects</a></li>
-		<li><a th:href="@{/autoflows}">AutoFlows</a></li>
-		<li><a th:href="@{/autoactions}">AutoActions</a></li>
-		<li><a th:href="@{/autotestcases}">AutoTestCases</a></li>
+		<li>
+			<a th:href="@{/}">Home</a>
+		</li>
+		<li>
+			<a th:href="@{/employee}">Employee</a>
+		</li>
+		<li>
+			<a th:href="@{/autoprojects}">AutoProjects</a>
+		</li>
+		<li>
+			<a th:href="@{/autoflows}">AutoFlows</a>
+		</li>
+		<li>
+			<a th:href="@{/autoactions}">AutoActions</a>
+		</li>
+		<li>
+			<a th:href="@{/autotestcases}">AutoTestCases</a>
+		</li>
 	</ul>
 
 	<script type="text/javascript">

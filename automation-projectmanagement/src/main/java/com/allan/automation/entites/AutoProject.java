@@ -11,8 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
-public class AutoProject {
+public class AutoProject extends BaseDomain{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "auto_project_seq")
 	private long autoProjectId;
@@ -62,6 +65,14 @@ public class AutoProject {
 
 	public void setEmployees(List<Employee> employees) {
 		this.employees = employees;
+	}
+
+	
+
+	@Override
+	public String toString() {
+		return "AutoProject [autoProjectId=" + autoProjectId + ", name=" + name + ", stage=" + stage + ", description="
+				+ description + ", employees=" + employees + "]";
 	}
 
 }

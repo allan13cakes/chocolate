@@ -1,11 +1,16 @@
 package com.allan.automation.controllers;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +25,7 @@ import com.allan.automation.entites.AutoAction;
 import com.allan.automation.entites.AutoFlow;
 import com.allan.automation.entites.AutoTestCase;
 import com.allan.automation.entites.AutoTestStep;
+import com.allan.automation.utils.AutomationExcelGenerator;
 import com.allan.automation.views.AutoTestCaseForm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -82,8 +88,8 @@ public class AutoTestCaseController {
 
 			if ("0".equals(type)) {
 				// action
-				AutoAction autoAction = autoActionRepo.findById(new Long(id)).get();
-				autoTestStep.setAutoAction(autoAction);
+//				AutoAction autoAction = autoActionRepo.findById(new Long(id)).get();
+//				autoTestStep.setAutoAction(autoAction);
 			} else {
 				// flow
 				AutoFlow autoFlow = autoFlowRepo.findById(new Long(id)).get();
@@ -92,7 +98,6 @@ public class AutoTestCaseController {
 
 			autoTestStep.setStepOrder(index++);
 			autoTestStep.setDescription(description);
-			autoTestStep.setTestDatas(parameterStr);
 			autoTestStep.setAutoTestCase(autoTestCase);
 			autoTestCase.getAutoTestSteps().add(autoTestStep);
 		}
@@ -103,7 +108,15 @@ public class AutoTestCaseController {
 	@GetMapping("/edit/{id}")
 	public String displayEditForm(@PathVariable Long id, Model model) {
 		AutoTestCase autoTestCase = autoTestCaseRepo.findById(id).get();
-		model.addAttribute("autoTestCase", autoTestCase);
+		AutoTestCaseForm autoTestCaseForm = new AutoTestCaseForm();
+		autoTestCaseForm.setAutoTestCase(autoTestCase);
+		model.addAttribute("autoTestCaseForm", autoTestCaseForm);
+
+		List<AutoAction> autoActions = autoActionRepo.findAll();
+		model.addAttribute("autoActions", autoActions);
+
+		List<AutoFlow> autoFlows = autoFlowRepo.findAll();
+		model.addAttribute("autoFlows", autoFlows);
 		return "autotestcases/update-autotestcase";
 	}
 
@@ -128,5 +141,14 @@ public class AutoTestCaseController {
 	public String delete(@PathVariable Long id) {
 		autoTestCaseRepo.deleteById(id);
 		return "redirect:/autotestcases";
+	}
+
+	@GetMapping("/export")
+	public ResponseEntity<InputStreamResource> export() throws IOException {
+		List<AutoTestCase> autoTestCases = autoTestCaseRepo.findAll();
+		ByteArrayInputStream in = AutomationExcelGenerator.autoTestCaseToExcel(autoTestCases);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=autotestcase.xlsx");
+		return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
 	}
 }
