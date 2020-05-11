@@ -1,0 +1,10 @@
+-------------------------------------------------------------------------------
+Test set: com.automation.selenium.HtmlDriverTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.294 s <<< FAILURE! - in com.automation.selenium.HtmlDriverTest
+test(com.automation.selenium.HtmlDriverTest)  Time elapsed: 0.091 s  <<< ERROR!
+java.lang.NoClassDefFoundError: org/openqa/selenium/remote/SessionNotFoundException
+	at com.automation.selenium.HtmlDriverTest.test(HtmlDriverTest.java:11)
+Caused by: java.lang.ClassNotFoundException: org.openqa.selenium.remote.SessionNotFoundException
+	at com.automation.selenium.HtmlDriverTest.test(HtmlDriverTest.java:11)
+

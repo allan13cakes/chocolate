@@ -15,6 +15,11 @@ import com.allan.model.response.UserRest;
 @RestController
 @RequestMapping("users")
 public class UserController {
+	@GetMapping("/status/check")
+	public String status() {
+		return "working";
+	}
+	
 	@GetMapping
 	public String display(@RequestParam(value = "page", defaultValue = "10") int page,
 			@RequestParam(value = "limit", defaultValue = "1") int limit,
