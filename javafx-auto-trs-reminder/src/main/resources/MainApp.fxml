@@ -1,0 +1,69 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.Font?>
+<GridPane hgap="10" vgap="10"
+	fx:controller="com.allan.Controller" xmlns:fx="http://javafx.com/fxml"
+	stylesheets="@MainApp.css">
+	<padding>
+		<Insets top="5" right="10" bottom="5" left="10"></Insets>
+	</padding>
+	<TextField fx:id="searchBox" promptText="Search"
+		GridPane.rowIndex="0" GridPane.columnIndex="0">
+	</TextField>
+	<ListView fx:id="sampleListView" minWidth="200" maxWidth="200"
+		GridPane.rowIndex="1" GridPane.columnIndex="0">
+	</ListView>
+	<TabPane GridPane.rowIndex="0" GridPane.columnIndex="1"
+		GridPane.rowSpan="2" GridPane.columnSpan="1"
+		tabClosingPolicy="UNAVAILABLE" styleClass="floating"
+		GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+		<Tab text="Main Page">
+			<VBox spacing="8">
+				<GridPane hgap="10" vgap="10" alignment="center">
+					<padding>
+						<Insets top="5" right="10" bottom="5" left="10"></Insets>
+					</padding>
+					<Label text="name" GridPane.rowIndex="0"
+						GridPane.columnIndex="0"></Label>
+					<TextField fx:id="nameField" GridPane.rowIndex="0"
+						GridPane.columnIndex="1"></TextField>
+
+					<Label text="email subject" GridPane.rowIndex="1"
+						GridPane.columnIndex="0"></Label>
+					<TextField fx:id="emailSubjectField"
+						GridPane.rowIndex="1" GridPane.columnIndex="1"></TextField>
+
+					<Label text="email from" GridPane.rowIndex="2"
+						GridPane.columnIndex="0"></Label>
+					<TextField fx:id="emailFromField" GridPane.rowIndex="2"
+						GridPane.columnIndex="1"></TextField>
+
+					<Label text="email to" GridPane.rowIndex="3"
+						GridPane.columnIndex="0"></Label>
+					<TextField fx:id="emailToField" GridPane.rowIndex="3"
+						GridPane.columnIndex="1"></TextField>
+
+					<Label text="email cc" GridPane.rowIndex="4"
+						GridPane.columnIndex="0"></Label>
+					<TextField fx:id="emailCcField" GridPane.rowIndex="4"
+						GridPane.columnIndex="1"></TextField>
+
+					<Label text="content" GridPane.rowIndex="5"
+						GridPane.columnIndex="0"></Label>
+					<TextArea fx:id="contentTextArea" GridPane.rowIndex="6"
+						GridPane.columnIndex="0" GridPane.columnSpan="2"></TextArea>
+
+					<Button onAction="#run" GridPane.rowIndex="7"
+						GridPane.columnIndex="0">Run</Button>
+				</GridPane>
+				<TextArea fx:id="consoleTextArea"></TextArea>
+			</VBox>
+
+		</Tab>
+
+	</TabPane>
+
+</GridPane>
+	
