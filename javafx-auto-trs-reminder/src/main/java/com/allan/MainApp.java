@@ -1,5 +1,7 @@
 package com.allan;
 
+import com.allan.model.AutoData;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -30,6 +32,15 @@ public class MainApp extends Application {
 		primaryStage.setHeight(screenBounds.getHeight() * 0.75);
 
 		primaryStage.show();
+	}
+
+	public void stop() {
+		AutoData.getInstance().store();
+
+	}
+
+	public void init() {
+		AutoData.getInstance().loadAutoSamples();
 	}
 
 }

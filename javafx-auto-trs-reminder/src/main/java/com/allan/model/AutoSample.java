@@ -1,30 +1,12 @@
 package com.allan.model;
 
-import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.List;
-
 public class AutoSample {
-	private static final String PATH = "settings.xml";
 	private String name;
-	private String content;
-	private String emailSubject;
-	private String emailFrom;
-	private String emailTo;
-	private String emailCc;
-
-	public AutoSample() {
-		super();
-	}
-
-	public AutoSample(String name) {
-		super();
-		this.name = name;
-	}
+	private String browserType;
+	private boolean isOpenBrowser;
+	private String gocs;
+	private String template;
+	private String ignores;
 
 	public String getName() {
 		return name;
@@ -34,62 +16,46 @@ public class AutoSample {
 		this.name = name;
 	}
 
-	public String getContent() {
-		return content;
+	public String getBrowserType() {
+		return browserType;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setBrowserType(String browserType) {
+		this.browserType = browserType;
+	}
+	
+	
+
+	public boolean isOpenBrowser() {
+		return isOpenBrowser;
 	}
 
-	public String getEmailSubject() {
-		return emailSubject;
+	public void setOpenBrowser(boolean isOpenBrowser) {
+		this.isOpenBrowser = isOpenBrowser;
 	}
 
-	public void setEmailSubject(String emailSubject) {
-		this.emailSubject = emailSubject;
+	public String getGocs() {
+		return gocs;
 	}
 
-	public String getEmailFrom() {
-		return emailFrom;
+	public void setGocs(String gocs) {
+		this.gocs = gocs;
 	}
 
-	public void setEmailFrom(String emailFrom) {
-		this.emailFrom = emailFrom;
+	public String getTemplate() {
+		return template;
 	}
 
-	public String getEmailTo() {
-		return emailTo;
+	public void setTemplate(String template) {
+		this.template = template;
 	}
 
-	public void setEmailTo(String emailTo) {
-		this.emailTo = emailTo;
+	public String getIgnores() {
+		return ignores;
 	}
 
-	public String getEmailCc() {
-		return emailCc;
-	}
-
-	public void setEmailCc(String emailCc) {
-		this.emailCc = emailCc;
-	}
-
-	@SuppressWarnings("unchecked")
-	public static List<AutoSample> load() throws FileNotFoundException, IOException {
-		List<AutoSample> list;
-		try (FileInputStream fis = new FileInputStream(PATH); XMLDecoder decoder = new XMLDecoder(fis)) {
-			list = (List<AutoSample>) decoder.readObject();
-		}
-		return list;
-	}
-
-	public static void store(List<AutoSample> list) throws FileNotFoundException, IOException {
-		try (FileOutputStream fos = new FileOutputStream(PATH); XMLEncoder encoder = new XMLEncoder(fos)) {
-			encoder.setExceptionListener((Exception e) -> {
-				e.printStackTrace();
-			});
-			encoder.writeObject(list);
-		}
+	public void setIgnores(String ignores) {
+		this.ignores = ignores;
 	}
 
 }

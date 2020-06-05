@@ -3,22 +3,45 @@
  <object class="java.util.ArrayList">
   <void method="add">
    <object class="com.allan.model.AutoSample">
+    <void property="browserType">
+     <string>chrome</string>
+    </void>
+    <void property="gocs">
+     <string>aaa</string>
+    </void>
+    <void property="ignores">
+     <string>asd</string>
+    </void>
+    <void property="name">
+     <string>aaa</string>
+    </void>
+    <void property="openBrowser">
+     <boolean>true</boolean>
+    </void>
+    <void property="template">
+     <string>template 1</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="com.allan.model.AutoSample">
+    <void property="browserType">
+     <string>chrome</string>
+    </void>
+    <void property="gocs">
+     <string>test</string>
+    </void>
+    <void property="ignores">
+     <string>1111</string>
+    </void>
     <void property="name">
      <string>test</string>
     </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="com.allan.model.AutoSample">
-    <void property="name">
-     <string>test1</string>
+    <void property="openBrowser">
+     <boolean>true</boolean>
     </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="com.allan.model.AutoSample">
-    <void property="name">
-     <string>test2</string>
+    <void property="template">
+     <string>template 2</string>
     </void>
    </object>
   </void>
